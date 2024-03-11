@@ -7,6 +7,7 @@ export default function TabAdviceScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab Advice</Text>
+      <Text style={styles.title}>Hello</Text>
     </View>
   );
 }
