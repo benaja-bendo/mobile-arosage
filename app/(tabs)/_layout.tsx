@@ -11,7 +11,7 @@ function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
 }) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+  return <FontAwesome size={28} style={{ marginBottom: -3, color: 'white' }} {...props} />;
 }
 
 export default function TabLayout() {
@@ -21,7 +21,9 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarStyle: { backgroundColor: '#0d5227' },
         headerShown: useClientOnlyValue(false, true),
+        tabBarLabelStyle: { color: 'white' },
       }}>
       <Tabs.Screen
         name="index"
@@ -59,10 +61,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="photos" // Nom de l'onglet pour les photos
+        name="photos"
         options={{
-          title: 'Photos', // Titre de l'onglet
-          tabBarIcon: ({ color }) => <TabBarIcon name="camera" color={color} />, // Icône pour les photos
+          title: 'Photos', 
+          tabBarIcon: ({ color }) => <TabBarIcon name="camera" color={color} />, 
         }}
       />
     </Tabs>
