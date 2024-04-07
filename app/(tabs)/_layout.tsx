@@ -1,4 +1,5 @@
 import React from 'react';
+import { Ionicons } from '@expo/vector-icons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
 import { Pressable } from 'react-native';
@@ -10,10 +11,17 @@ import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
+  isFocused: boolean;
 }) {
-  return <FontAwesome size={28} style={{ marginBottom: -3, color: 'white' }} {...props} />;
+  const { name, color, isFocused } = props;
+  return (
+    <FontAwesome
+      name={name}
+      size={24}
+      color={isFocused ? 'white' : '#ccc'} 
+    />
+  );
 }
-
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
@@ -28,43 +36,36 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Accueil',
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="two"
-        options={{
-          title: 'Profil',
-          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />, 
+          title: 'Plantes',
+          tabBarIcon: ({ color }) => <FontAwesome name="leaf" size={24} color={color} />,
         }}
       />
       <Tabs.Screen
         name="advice"
         options={{
-          title: 'Plantes',
-          tabBarIcon: ({ color }) => <TabBarIcon name="leaf" color={color} />, 
+          title: 'Notes',
+          tabBarIcon: ({ color }) => <FontAwesome name="sticky-note" size={24} color={color} />,
         }}
       />
       <Tabs.Screen
         name="photos"
         options={{
-          title: 'Photos', 
-          tabBarIcon: ({ color }) => <TabBarIcon name="camera" color={color} />, 
+          title: 'Photos',
+          tabBarIcon: ({ color }) => <FontAwesome name="camera" size={24} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="messaging"
+        options={{
+          title: 'Messages',
+          tabBarIcon: ({ color }) => <FontAwesome name="envelope" size={24} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="profil"
+        options={{
+          title: 'Profil',
+          tabBarIcon: ({ color }) => <Ionicons name="person" size={24} color={color} />,
         }}
       />
     </Tabs>
