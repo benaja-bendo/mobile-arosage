@@ -13,6 +13,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "camera": {
+      "permissions": "camera"
+    },
     "assetBundlePatterns": [
       "**/*"
     ],
