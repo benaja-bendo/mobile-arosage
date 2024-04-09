@@ -1,68 +1,81 @@
-import { StyleSheet } from 'react-native';
-import { Camera, CameraType } from 'expo-camera';
-import { useState } from 'react';
-import { Button, TouchableOpacity } from 'react-native';
-import { usePermissions } from 'expo-permissions';
+import React, { useState, useEffect, useRef } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Camera } from 'expo-camera';
+import { CameraType } from 'expo-camera';
+import * as FileSystem from 'expo-file-system';
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+export default function PhotosScreen() {
+  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+  const cameraRef = useRef<Camera | null>(null);
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
+  }, []);
 
-export default function TabOneScreen() {
+  const takePicture = async () => {
+    if (cameraRef.current) {
+      try {
+        const photo = await cameraRef.current.takePictureAsync();
+        if (photo && photo.uri) {
+          console.log("Photo prise :", photo.uri);
+          savePhoto(photo.uri);
+        } else {
+          console.error("Erreur lors de la prise de la photo : la réponse est null ou ne contient pas d'URI.");
+        }
+      } catch (error) {
+        console.error("Erreur lors de la prise de la photo :", error);
+      }
+    }
+  };
 
-const [type, setType] = useState(CameraType.back);
-  const [permission, requestPermission] = Camera.useCameraPermissions();
+  const savePhoto = async (uri: string) => {
+    try {
+      const destinationUri = `${FileSystem.documentDirectory}/image.jpg`;
 
-  if (!permission) {
-    return <Text>Loading...</Text>;
+      await FileSystem.copyAsync({ from: uri, to: destinationUri });
+      console.log('Photo enregistrée dans :', destinationUri);
+    } catch (error) {
+      console.error('Erreur lors de l\'enregistrement de la photo :', error);
+    }
+  };
+
+  if (hasPermission === null) {
+    return <View />;
   }
 
-  if (!permission.granted) {
-    return <Text>Pas de permission</Text>;
+  if (!hasPermission) {
+    return <Text>No access to camera</Text>;
   }
 
-  function toggleCameraType() {
-    setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
-  }
+  return (
+    <View style={styles.container}>
+      <Camera
+        ref={cameraRef}
+        style={styles.camera}
+        type={CameraType.back}
+      />
 
-    return (
-        <View style={styles.container}>
-          <Camera style={styles.camera} type={type}>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-                <Text style={styles.text}>Flip Camera</Text>
-              </TouchableOpacity>
-            </View>
-          </Camera>
-        </View>
-      );
+      <TouchableOpacity style={styles.button} onPress={takePicture}>
+        <Text style={styles.text}>Prendre une photo</Text>
+      </TouchableOpacity>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
   },
   camera: {
     flex: 1,
-    width: '100%',
   },
-  buttonContainer: {
+  button: {
     position: 'absolute',
     bottom: 20,
     left: 20,
-  },
-  button: {
-    backgroundColor: 'blue',
+    backgroundColor: 'green',
     padding: 10,
     borderRadius: 5,
   },
