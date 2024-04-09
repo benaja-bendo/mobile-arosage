@@ -19,7 +19,10 @@ type Data = {
   updated_at: string
 };
 
-const App = () => {
+export default function App () {
+
+
+//const App = () => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState<Data[]>([]);
 
@@ -60,7 +63,7 @@ const App = () => {
   );
 };
 
-export default App;
+
   /*return (
     
       <Text style={styles.title}>Tab One</Text>
