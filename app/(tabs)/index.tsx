@@ -88,4 +88,22 @@ const styles = StyleSheet.create({
     height: 1,
     width: '80%',
   },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  item: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  image: {
+    width: 100,
+    height: 100,
+    marginRight: 20,
+  },
+  textContainer: {
+    flex: 1,
+  },
 });
