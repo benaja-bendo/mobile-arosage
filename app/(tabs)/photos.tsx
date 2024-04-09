@@ -33,7 +33,6 @@ export default function PhotosScreen() {
   const savePhoto = async (uri: string) => {
     try {
       const destinationUri = `${FileSystem.documentDirectory}/image.jpg`;
-
       await FileSystem.copyAsync({ from: uri, to: destinationUri });
       console.log('Photo enregistrée dans :', destinationUri);
     } catch (error) {

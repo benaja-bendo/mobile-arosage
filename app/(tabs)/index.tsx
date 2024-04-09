@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, Image, StyleSheet } from 'react-native';
 
-
 const generateFakePlants = (count: number): { id: number; name: string; description: string; image: string; }[] => {
   const fakePlants: { id: number; name: string; description: string; image: string; }[] = [];
   for (let i = 0; i < count; i++) {
