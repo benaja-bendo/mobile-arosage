@@ -2,13 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
 import { CameraType } from 'expo-camera';
-
 import * as FileSystem from 'expo-file-system';
 
 export default function PhotosScreen() {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const cameraRef = useRef<Camera | null>(null);
-
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
@@ -35,7 +33,6 @@ export default function PhotosScreen() {
   const savePhoto = async (uri: string) => {
     try {
       const destinationUri = `${FileSystem.documentDirectory}/image.jpg`;
-
       await FileSystem.copyAsync({ from: uri, to: destinationUri });
       console.log('Photo enregistrée dans :', destinationUri);
     } catch (error) {

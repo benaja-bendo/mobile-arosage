@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, Image, StyleSheet } from 'react-native';
 
-// Fonction pour générer des données de plantes fictives
-const generateFakePlants = (count) => {
-  const fakePlants = [];
+const generateFakePlants = (count: number): { id: number; name: string; description: string; image: string; }[] => {
+  const fakePlants: { id: number; name: string; description: string; image: string; }[] = [];
   for (let i = 0; i < count; i++) {
     const id = i + 1;
     const name = `Plante ${id}`;
@@ -41,6 +40,7 @@ export default function App() {
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

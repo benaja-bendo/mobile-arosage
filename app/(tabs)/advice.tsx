@@ -1,8 +1,5 @@
-import { StyleSheet, TextInput } from 'react-native';
+import { StyleSheet, TextInput, Text, View } from 'react-native';
 import React, { useState } from 'react';
-
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
 
 export default function TabAdviceScreen() {
   const [searchQuery, setSearchQuery] = useState('');
