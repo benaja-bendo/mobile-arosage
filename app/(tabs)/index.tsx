@@ -8,9 +8,15 @@ import {ActivityIndicator, FlatList} from 'react-native';
   
 type Data = {
   id: string;
-  title: string;
+  name: string;
   description: string;
   created_at: string;
+  pathImage: string;
+  user_created: number,
+  date_begin: string,
+  date_end: string,
+  is_published: number,
+  updated_at: string
 };
 
 const App = () => {
@@ -43,8 +49,9 @@ const App = () => {
           data={data}
           keyExtractor={({id}) => id}
           renderItem={({item}) => (
+            
             <Text>
-              {item.title}, {item.description}, {item.created_at}
+              {item.name}, {item.description}, {item.created_at}, {item.pathImage}, {item.updated_at}
             </Text>
           )}
         />
